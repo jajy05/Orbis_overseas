@@ -366,7 +366,7 @@
             
             <div className="space-y-8">
               <a 
-                href="https://www.google.com/maps/search/?api=1&query=123+Trade+Center+BKC+Mumbai+India" 
+                href="https://maps.app.goo.gl/B7iYxE6oUtuz8Xh36"
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-6 group cursor-pointer"
@@ -376,7 +376,7 @@
                 </div>
                 <div>
                   <p className="text-[9px] uppercase tracking-widest font-bold text-brand-grey mb-1">Global HQ</p>
-                  <p className="text-lg font-serif italic">123 Trade Center, BKC, Mumbai, India</p>
+                  <p className="text-lg font-serif italic">Orbis Overseas, Amgaon, MH 441902 India</p>
                 </div>
               </a>
               <a 
@@ -514,13 +514,13 @@
               <ul className="space-y-6 text-sm text-brand-grey font-light">
                 <li>
                   <a 
-                    href="https://www.google.com/maps/search/?api=1&query=123+Trade+Center+BKC+Mumbai+India" 
+                    href="https://maps.app.goo.gl/B7iYxE6oUtuz8Xh36" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="flex items-start gap-4 hover:text-brand-gold transition-colors group"
                   >
                     <MapPin className="w-4 h-4 text-brand-gold mt-1 flex-shrink-0" />
-                    <span className="text-brand-dark group-hover:text-brand-gold transition-colors">123 Trade Center, BKC,<br />Mumbai, MH 400051, India</span>
+                    <span className="text-brand-dark group-hover:text-brand-gold transition-colors"> Orbis Overseas<br />Amgaon, MH 441902, India</span>
                   </a>
                 </li>
                 <li>
