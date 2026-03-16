@@ -1,82 +1,79 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
-import Database from "better-sqlite3";
-import path from "path";
-import { fileURLToPath } from "url";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
-const db = new Database("leads.db");
+const app = express();
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI as string;
 
-// Initialize database
-db.exec(`
-  CREATE TABLE IF NOT EXISTS inquiries (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    email TEXT,
-    subject TEXT,
-    message TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )
-`);
+app.use(cors());
+app.use(express.json());
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+/* ------------------ MongoDB Connection ------------------ */
 
-  app.use(express.json());
+mongoose
+  .connect(MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
 
-  // API Routes
-  app.post("/api/inquiry", (req, res) => {
-    const { name, email, subject, message } = req.body;
-    
-    if (!name || !email || !message) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
+/* ------------------ Schema ------------------ */
 
-    try {
-      const stmt = db.prepare("INSERT INTO inquiries (name, email, subject, message) VALUES (?, ?, ?, ?)");
-      stmt.run(name, email, subject, message);
-      
-      console.log(`New inquiry received from ${name} (${email})`);
-      
-      // In a real app, you'd send an email here using nodemailer
-      // For now, we simulate it
-      res.json({ success: true, message: "Inquiry received successfully" });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Failed to save inquiry" });
-    }
-  });
+const leadSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  country: String,
+  product: String,
+  subject: String,
+  message: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-  app.get("/api/leads", (req, res) => {
-    try {
-      const leads = db.prepare("SELECT * FROM inquiries ORDER BY created_at DESC").all();
-      res.json(leads);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Failed to fetch leads" });
-    }
-  });
+const Lead = mongoose.model("Lead", leadSchema);
 
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
+/* ------------------ Routes ------------------ */
+
+// Save lead
+app.post("/api/submit", async (req, res) => {
+  
+  try {
+     
+    const lead = new Lead(req.body);
+    await lead.save();
+
+    res.json({
+      success: true,
+      message: "Lead saved successfully",
     });
-    app.use(vite.middlewares);
-  } else {
-    app.use(express.static(path.join(__dirname, "dist")));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(__dirname, "dist", "index.html"));
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error saving lead",
     });
   }
+});
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
-}
+// Get all leads
+app.get("/api/leads", async (req, res) => {
+  try {
+    const leads = await Lead.find().sort({ createdAt: -1 });
 
-startServer();
+    res.json(leads);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching leads",
+    });
+  }
+});
+
+/* ------------------ Server ------------------ */
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

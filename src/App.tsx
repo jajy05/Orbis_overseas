@@ -26,6 +26,7 @@
 
   
   import logofinl from './assets/logofinal.png'
+import { count } from 'console';
 
   // --- Components ---
 
@@ -327,6 +328,9 @@
     const [formData, setFormData] = useState({
       name: '',
       email: '',
+      country: '',
+      product: '',
+      phone: '',
       subject: '',
       message: ''
     });
@@ -336,14 +340,14 @@
       e.preventDefault();
       setStatus('submitting');
       try {
-        const response = await fetch('/api/inquiry', {
+        const response = await fetch('http://localhost:5000/api/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
         if (response.ok) {
           setStatus('success');
-          setFormData({ name: '', email: '', subject: '', message: '' });
+          setFormData({ name: '', email: '', country: '', phone: '', product: '', subject: '', message: '' });
           setTimeout(() => setStatus('idle'), 5000);
         } else {
           setStatus('error');
@@ -445,6 +449,50 @@
                     placeholder="alex@globaltrade.com" 
                   />
                 </div>
+                <div className="space-y-2">
+<label className="text-[9px] uppercase tracking-widest font-bold text-brand-grey">
+Country
+</label>
+<input
+type="text"
+required
+value={formData.country}
+onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+className="w-full border-b border-brand-light-grey py-3 focus:outline-none focus:border-brand-gold transition-all font-light"
+placeholder="United Arab Emirates"
+/>
+</div>
+<div className="space-y-2">
+<label className="text-[9px] uppercase tracking-widest font-bold text-brand-grey">
+Phone / WhatsApp
+</label>
+<input
+type="tel"
+required
+value={formData.phone}
+onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+className="w-full border-b border-brand-light-grey py-3 focus:outline-none focus:border-brand-gold transition-all font-light"
+placeholder="+91 9876543210"
+/>
+</div>
+<div className="space-y-2">
+<label className="text-[9px] uppercase tracking-widest font-bold text-brand-grey">
+Product Interested
+</label>
+<select
+value={formData.product}
+onChange={(e) => setFormData({ ...formData, product: e.target.value })}
+className="w-full border-b border-brand-light-grey py-3 focus:outline-none focus:border-brand-gold transition-all font-light bg-transparent"
+>
+<option value="">Select Product</option>
+<option value="IR64 Rice">IR64 Rice</option>
+<option value="Sona Masoori">Sona Masoori</option>
+<option value="Parboiled Rice">Parboiled Rice</option>
+<option value="White Non-Basmati Rice">White Non-Basmati Rice</option>
+<option value="Other">Other</option>
+</select>
+</div>
+               
               </div>
               <div className="space-y-2">
                 <label className="text-[9px] uppercase tracking-widest font-bold text-brand-grey">Subject</label>
