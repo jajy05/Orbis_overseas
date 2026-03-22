@@ -27,7 +27,7 @@
   import ir64preboiled from './assets/IR64-Parboiled-5-Broken-Rice.jpg'
   import ir64whiterice from './assets/ir-64-white-raw-rice-024.jpg'
   import swarnaparboiled from './assets/swarna-parboiled-rice.jpg'
-  import swarnawhite from './assets/swarna-White-Rice.jpg'
+  import swarnawhite from './assets/swarnaWhiteRice.jpg'
   import sonaraw from './assets/sona-masoori-raw-rice-514.jpg'
   import sonasteam from './assets/sona-masoori-steam-rice-broken-5-.jpg'
   import bpt from './assets/export-quality-white-bpt-rice-214.jpg'
