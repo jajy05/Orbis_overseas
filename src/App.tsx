@@ -89,7 +89,7 @@ import { count } from 'console';
               <div className="h-4 w-[1px] bg-brand-light-grey mx-2" />
               <div className="flex items-center gap-2 text-brand-dark">
                 <Phone className="w-4 h-4 text-brand-gold" />
-                <span className="text-[12px] font-bold tracking-widest">+91 7276864194</span>
+                <span className="text-[12px] font-bold tracking-widest">+91 86 6959 4929</span>
               </div>
             </div>
 
@@ -384,7 +384,7 @@ import { count } from 'console';
                 </div>
               </a>
               <a 
-                href="tel:+917276864194" 
+                href="tel:+91 86 6959 4929" 
                 className="flex items-center gap-6 group cursor-pointer"
               >
                 <div className="w-12 h-12 bg-white border border-brand-light-grey flex items-center justify-center text-brand-gold group-hover:bg-brand-gold group-hover:text-white transition-all">
@@ -392,7 +392,7 @@ import { count } from 'console';
                 </div>
                 <div>
                   <p className="text-[9px] uppercase tracking-widest font-bold text-brand-grey mb-1">Direct Line</p>
-                  <p className="text-lg font-serif italic">+91 7276864194</p>
+                  <p className="text-lg font-serif italic">+91 86 6959 4929</p>
                 </div>
               </a>
               <a 
@@ -408,7 +408,7 @@ import { count } from 'console';
                 </div>
               </a>
               <a 
-                href="https://wa.me/917276864194" 
+                href="https://wa.me/918669594929" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-6 group cursor-pointer"
@@ -418,7 +418,7 @@ import { count } from 'console';
                 </div>
                 <div>
                   <p className="text-[9px] uppercase tracking-widest font-bold text-brand-grey mb-1">WhatsApp Business</p>
-                  <p className="text-lg font-serif italic">+91 7276864194</p>
+                  <p className="text-lg font-serif italic">+91 86 6959 4929</p>
                 </div>
               </a>
             </div>
@@ -573,11 +573,11 @@ className="w-full border-b border-brand-light-grey py-3 focus:outline-none focus
                 </li>
                 <li>
                   <a 
-                    href="tel:+917276864194" 
+                    href="tel:+91 86 6959 4929" 
                     className="flex items-center gap-4 hover:text-brand-gold transition-colors group"
                   >
                     <Phone className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                    <span className="text-brand-dark group-hover:text-brand-gold transition-colors">+91 7276864194</span>
+                    <span className="text-brand-dark group-hover:text-brand-gold transition-colors">+91 86 6959 4929  </span>
                   </a>
                 </li>
                 <li>
