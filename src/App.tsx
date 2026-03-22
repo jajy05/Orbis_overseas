@@ -23,13 +23,11 @@
   } from 'lucide-react';
   import { Link as ScrollLink } from 'react-scroll';
   import { cn } from './lib/utils';
-
-  
   import logofinl from './assets/logofinal.png'
   import ir64preboiled from './assets/IR64-Parboiled-5-Broken-Rice.jpg'
   import ir64whiterice from './assets/ir-64-white-raw-rice-024.jpg'
   import swarnaparboiled from './assets/swarna-parboiled-rice.jpg'
-  import swarnawhite from './assets/swarna-white-rice.jpg'
+  import swarnawhite from './assets/swarna-White-Rice.jpg'
   import sonaraw from './assets/sona-masoori-raw-rice-514.jpg'
   import sonasteam from './assets/sona-masoori-steam-rice-broken-5-.jpg'
   import bpt from './assets/export-quality-white-bpt-rice-214.jpg'
