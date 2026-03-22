@@ -26,6 +26,15 @@
 
   
   import logofinl from './assets/logofinal.png'
+  import ir64preboiled from './assets/IR64-Parboiled-5-Broken-Rice.jpg'
+  import ir64whiterice from './assets/ir-64-white-raw-rice-024.jpg'
+  import swarnaparboiled from './assets/swarna-parboiled-rice.jpg'
+  import swarnawhite from './assets/swarna-white-rice.jpg'
+  import sonaraw from './assets/sona-masoori-raw-rice-514.jpg'
+  import sonasteam from './assets/sona-masoori-steam-rice-broken-5-.jpg'
+  import bpt from './assets/export-quality-white-bpt-rice-214.jpg'
+  import kolamraw from './assets/kolam-raw-rice-401.jpg'
+  import kolamsteam from './assets/kolam-steam-rice.jpg'
 import { count } from 'console';
 
   // --- Components ---
@@ -235,53 +244,129 @@ import { count } from 'console';
     );
   };
 
-  const ProductCard = ({ title, description, image }: any) => (
-    <div className="bg-brand-light-grey/50 border border-brand-light-grey rounded-sm overflow-hidden flex flex-col md:flex-row items-center gap-8 p-8 md:p-12">
-      <div className="w-full md:w-1/2 space-y-6">
-        <h3 className="text-4xl font-bold text-brand-dark">{title}</h3>
-        <p className="text-brand-grey text-base leading-relaxed font-light">
-          {description}
-        </p>
-        <ScrollLink 
-          to="contact" 
-          smooth={true} 
-          className="inline-block bg-[#3b5998] hover:bg-[#2d4373] text-white px-10 py-4 rounded-full text-sm font-medium transition-all cursor-pointer shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-        >
-          Enquire Now
-        </ScrollLink>
-      </div>
-      <div className="w-full md:w-1/2 aspect-video md:aspect-square overflow-hidden rounded-sm border-4 border-brand-dark/10">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
+  type Product = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+};
+
+const ProductCard: React.FC<Product> = ({ id, title, description, image }) => {
+  const handleClick = () => {
+    // scroll to contact OR later route to detail page
+    const el = document.getElementById("contact");
+    el?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      className="group relative overflow-hidden rounded-md cursor-pointer"
+    >
+      {/* Image */}
+      <img
+        src={image}
+        alt={title}
+        className="w-full h-72 object-cover transition duration-500 group-hover:scale-110"
+      />
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+
+      {/* Text */}
+      <div className="absolute bottom-4 left-4 right-4 text-white">
+        <p className="text-sm opacity-80">{description}</p>
+
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">{title}</h3>
+          <span className="text-xl group-hover:translate-x-2 transition">
+            ↗
+          </span>
+        </div>
       </div>
     </div>
   );
+};
+const ProductsSection = () => {
+  const products: Product[] = [
+    {
+      id: "ir64-parboiled",
+      title: "IR64 Long Grain Parboiled Rice",
+      description: "Premium Export Quality",
+      image:ir64preboiled ,
+    },
+    {
+      id: "ir64-white",
+      title: "IR64 Long Grain White Rice",
+      description: "High Demand Variety",
+      image: ir64whiterice,
+    },
+    {
+      id: "swarna-white",
+      title: "Swarna White Rice",
+      description: "Widely Consumed Globally",
+      image: swarnawhite
+    },
+    {
+      id: "swarna-parboiled",
+      title: "Swarna Parboiled Rice",
+      description: "Strong & Nutritious Grains",
+      image: swarnaparboiled
+    },
+    {
+      id: "sona-raw",
+      title: "Sona Masoori Raw Rice",
+      description: "Lightweight & Aromatic",
+      image: sonaraw
+    },
+    {
+      id: "sona-steam",
+      title: "Sona Masoori Steam Rice",
+      description: "Perfect for Daily Use",
+      image: sonasteam
+    },
+    {
+      id: "bpt",
+      title: "BPT Rice",
+      description: "Soft Texture & Fine Quality",
+      image: bpt
+    },
+    {
+      id: "kolam-raw",
+      title: "Kolam Raw Rice",
+      description: "Medium Grain Premium Rice",
+      image: kolamraw
+    },
+    {
+      id: "kolam-steam",
+      title: "Kolam Steam Rice",
+      description: "Ideal for Bulk Consumption",
+      image: kolamsteam
+    },
+  ];
 
-  const ProductsSection = () => {
-    const products = [
-      {
-        title: "Rice",
-        description: "Our rice range includes both premium Basmati Rice and quality-tested Non-Basmati Rice varieties. Known for their superior grain structure, pleasant aroma, and excellent cooking properties, our rice products are processed in hygienic facilities and packed to preserve freshness. With reliable sourcing and strict quality control, we deliver rice that meets international standards and satisfies diverse global market requirements.",
-        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=2070"
-      }
-    ];
-
-    return (
-      <section id="products" className="py-32 px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="space-y-12">
-            {products.map((product, idx) => (
-              <ProductCard key={idx} {...product} />
-            ))}
-          </div>
+  return (
+    <section id="products" className="py-32 px-8 bg-white">
+      <div className="max-w-7xl mx-auto">
+        
+        <div className="text-center mb-16">
+          <span className="text-subheading">Our Collection</span>
+          <h2 className="text-heading">
+            Premium <span className="italic text-brand-gold">Rice Varieties</span>
+          </h2>
         </div>
-      </section>
-    );
-  };
+
+        {/* GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {products.map((product) => (
+            <ProductCard key={product.id} {...product} />
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+};
 
   const WhyUsSection = () => {
     return (
