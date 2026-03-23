@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import nodemailer from "nodemailer";
+
 
 dotenv.config();
 
@@ -11,6 +13,20 @@ const MONGO_URI = process.env.MONGO_URI as string;
 
 app.use(cors());
 app.use(express.json());
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("❌ Transporter error:", error);
+  } else {
+    console.log("✅ Email server is ready");
+  }
+});
 
 /* ------------------ MongoDB Connection ------------------ */
 
@@ -46,7 +62,24 @@ app.post("/api/submit", async (req, res) => {
      
     const lead = new Lead(req.body);
     await lead.save();
+     const { name, email, phone, country, product, message } = req.body;
 
+    // Send email
+    await transporter.sendMail({
+      from: `"Orbis Overseas" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: "🚀 New Export Inquiry Received",
+      html: `
+        <h2>New Buyer Inquiry</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Country:</strong> ${country}</p>
+        <p><strong>Product:</strong> ${product}</p>
+        <p><strong>Message:</strong> ${message}</p>
+      `,
+    });
+    
     res.json({
       success: true,
       message: "Lead saved successfully",
