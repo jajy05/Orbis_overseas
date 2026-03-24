@@ -14,7 +14,9 @@ const MONGO_URI = process.env.MONGO_URI as string;
 app.use(cors());
 app.use(express.json());
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+ host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -62,10 +64,14 @@ app.post("/api/submit", async (req, res) => {
      
     const lead = new Lead(req.body);
     await lead.save();
+     res.json({
+      success: true,
+      message: "Lead saved successfully",
+    });
      const { name, email, phone, country, product, message } = req.body;
 
     // Send email
-    await transporter.sendMail({
+     transporter.sendMail({
       from: `"Orbis Overseas" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       subject: "🚀 New Export Inquiry Received",
@@ -78,12 +84,12 @@ app.post("/api/submit", async (req, res) => {
         <p><strong>Product:</strong> ${product}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
+    }).catch((err) => {
+      console.error("❌ Email failed:", err);
     });
+
     
-    res.json({
-      success: true,
-      message: "Lead saved successfully",
-    });
+   
   } catch (error) {
     res.status(500).json({
       success: false,
