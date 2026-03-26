@@ -17,7 +17,7 @@ app.use(cors({
     "http://localhost:5173",
     "https://orbis-overseas.vercel.app"
   ],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "PUT"],
 }));
 app.use(express.json());
 
@@ -43,6 +43,27 @@ const leadSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+   status: {
+    type: String,
+    enum: [
+      "New",
+      "Contacted",
+      "Interested",
+      "Negotiation",
+      "Quotation Sent",
+      "Order Confirmed",
+      "Payment Received",
+      "Shipped",
+      "Closed Won",
+      "Closed Lost"
+    ],
+    default: "New",
+  },
+   notes: {
+    type: String,
+    default: "",
+  },
+
 });
 
 const Lead = mongoose.model("Lead", leadSchema);
@@ -123,6 +144,30 @@ app.get("/api/leads", async (req, res) => {
     res.status(500).json({
       message: "Error fetching leads",
     });
+  }
+});
+
+app.put("/api/leads/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ID" });
+    }
+
+    const updatedLead = await Lead.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedLead) {
+      return res.status(404).json({ message: "Lead not found" });
+    }
+
+    res.json(updatedLead);
+  } catch (error) {
+    res.status(500).json({ message: "Update failed" });
   }
 });
 
