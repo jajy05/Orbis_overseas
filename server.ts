@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
+
 import emailjs from "@emailjs/nodejs";
 
 
@@ -21,23 +21,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-const transporter = nodemailer.createTransport({
- host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  connectionTimeout: 20000,
-});
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("❌ Transporter error:", error);
-  } else {
-    console.log("✅ Email server is ready");
-  }
-});
 
 /* ------------------ MongoDB Connection ------------------ */
 
