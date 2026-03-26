@@ -423,7 +423,7 @@ const ProductsSection = () => {
       e.preventDefault();
       setStatus('submitting');
       try {
-        const response = await fetch('https://orbis-overseas-jmw9.onrender.com/api/submit', {
+        const response = await fetch('https://orbisoverseas-production.up.railway.app/api/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
