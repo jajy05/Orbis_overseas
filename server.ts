@@ -15,7 +15,9 @@ const MONGO_URI = process.env.MONGO_URI as string;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://orbis-overseas.vercel.app"
+    "https://orbis-overseas.vercel.app",  
+    "https://admin-panel-uoxk.vercel.app",
+    "https://orbisadminpanel.netlify.app"
   ],
   methods: ["GET", "POST", "PUT"],
 }));
